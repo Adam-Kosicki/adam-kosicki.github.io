@@ -1,0 +1,131 @@
+---
+layout: default
+---
+
+<article class="project-article">
+  <div class="container project-container">
+    
+    <!-- Back to home -->
+    <a href="{{ '/' | relative_url }}#projects" class="back-link">
+      <i class="fa-solid fa-arrow-left-long"></i> Back to Portfolio
+    </a>
+
+    <!-- Case Study Header -->
+    <header class="project-header">
+      <div class="project-meta-wrapper">
+        <h1 class="project-title">{{ page.title }}</h1>
+        <p class="project-subtitle">{{ page.subtitle }}</p>
+        
+        <!-- Tech Stack Tags -->
+        <div class="project-tech-tags">
+          {% for tech in page.tech_stack %}
+            <span class="tech-tag">{{ tech }}</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Hero Metric Accent Card -->
+      {% if page.hero_metric %}
+      <div class="hero-metric-card">
+        <span class="metric-label">Key Impact Metric</span>
+        <span class="metric-value">{{ page.hero_metric }}</span>
+      </div>
+      {% endif %}
+    </header>
+
+    <!-- Visual Divider -->
+    <div class="project-divider"></div>
+
+    <!-- Main Content Area -->
+    <div class="project-content-body markdown-body">
+      {{ content }}
+    </div>
+
+    <!-- Call to action block -->
+    <section class="project-cta-banner">
+      <h3>Let's Talk System Design</h3>
+      <p>Due to confidentiality, I cannot share the proprietary source code for this project. However, I'm happy to discuss the architecture, engineering trade-offs, and system design in detail.</p>
+      <div class="cta-buttons">
+        <a href="mailto:{{ site.author.email }}?subject=Discussing: {{ page.title }}" class="btn-primary">
+          <i class="fa-solid fa-envelope"></i> Discuss This Project
+        </a>
+        <a href="https://linkedin.com/in/{{ site.author.linkedin }}" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+          <i class="fa-brands fa-linkedin"></i> Connect on LinkedIn
+        </a>
+      </div>
+    </section>
+
+  </div>
+</article>
+
+<!-- Mermaid.js for Rendering Architecture Diagrams -->
+<style>
+  .mermaid {
+    display: block;
+    text-align: center;
+    overflow-x: auto;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    margin: 2.5rem 0;
+  }
+  .mermaid svg {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Jekyll's Kramdown markdown engine wraps code blocks in a div.language-mermaid container.
+    // We check for those container divs first, then fall back to standard pre/code tags.
+    let targets = [];
+    const kramdownDivs = document.querySelectorAll('div.language-mermaid');
+    if (kramdownDivs.length > 0) {
+      targets = Array.from(kramdownDivs);
+    } else {
+      const codeBlocks = document.querySelectorAll('pre code.language-mermaid, pre code.mermaid, pre.mermaid code');
+      targets = Array.from(codeBlocks).map(function(block) {
+        const pre = block.parentElement;
+        return (pre && pre.tagName === 'PRE') ? pre : block;
+      });
+    }
+
+    targets.forEach(function(target) {
+      const codeEl = target.querySelector('code') || target;
+      const text = codeEl.textContent.trim();
+      
+      const div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = text;
+      
+      if (target.parentElement) {
+        target.parentElement.replaceChild(div, target);
+      }
+    });
+
+    // Initialize mermaid configuration
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'dark',
+      themeVariables: {
+        background: '#0f1015',
+        primaryColor: '#0f1015',
+        primaryTextColor: '#ffffff',
+        lineColor: '#00f2fe',
+        secondaryColor: '#1e2030',
+        tertiaryColor: '#12131a'
+      },
+      securityLevel: 'loose'
+    });
+    
+    // Trigger render manually
+    if (typeof mermaid.run === 'function') {
+      mermaid.run({ querySelector: '.mermaid' });
+    } else if (typeof mermaid.init === 'function') {
+      mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+    }
+  });
+</script>

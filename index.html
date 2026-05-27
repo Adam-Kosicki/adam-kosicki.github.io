@@ -1,0 +1,531 @@
+---
+layout: default
+title: Home
+---
+
+<!-- Hero Section -->
+<section class="hero-section" id="about">
+  <div class="container hero-container">
+    <div class="hero-layout">
+      <div class="hero-header-flex">
+        <span class="hero-subtitle">Based in Austin, TX</span>
+        <div class="hero-social-links">
+          <a href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="https://linkedin.com/in/{{ site.author.linkedin }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+      </div>
+      <h1 class="hero-title">
+        Bridging the Gap Between <span class="title-glow">Research Depth</span> and <span class="title-glow">Production Execution</span>
+      </h1>
+      <p class="hero-desc">
+        I am an Engineering Research Scientist at the <strong>University of Texas at Austin</strong>. With <span class="experience-counter">2.2</span> years of technical ownership, I build high-throughput data pipelines and hardware-accelerated edge AI systems that transition academic prototypes into enterprise-scale solutions.
+      </p>
+      <div class="hero-actions">
+        <a href="#featured-project" class="btn-primary">
+          <i class="fa-solid fa-star"></i> View Featured Project
+        </a>
+        <a href="mailto:{{ site.author.email }}" class="btn-secondary">
+          <i class="fa-solid fa-paper-plane"></i> Contact Me
+        </a>
+      </div>
+    </div>
+    <div class="hero-image-container">
+      <div class="hero-image-wrapper">
+        <img src="{{ '/assets/images/profile.jpg' | relative_url }}" class="hero-avatar" alt="Adam Kosicki">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Superpowers / Core Focus Section -->
+<section class="container" style="padding: 4rem 2rem 1rem 2rem;">
+  <h2 class="section-title">Core Engineering Strengths</h2>
+  <p class="section-subtitle">My core technical capabilities and areas of specialization</p>
+  
+  <div class="superpowers-grid">
+    <!-- Card 1 -->
+    <div class="superpower-card">
+      <div class="superpower-icon">
+        <i class="fa-solid fa-microchip"></i>
+      </div>
+      <h3>Edge AI & Computer Vision</h3>
+      <p>
+        Experience migrating CPU-bound models into hardware-accelerated PyTorch pipelines (CUDA, FP16 quantization, batching) on NVIDIA Jetson edge nodes, hitting real-time 30 FPS.
+      </p>
+    </div>
+    
+    <!-- Card 2 -->
+    <div class="superpower-card">
+      <div class="superpower-icon">
+        <i class="fa-solid fa-database"></i>
+      </div>
+      <h3>Production Data Pipelines</h3>
+      <p>
+        Building high-throughput, parallelized data ingestion systems using asynchronous Python and PostgreSQL deployed on supercomputers, migrating records to cloud architectures like Snowflake.
+      </p>
+    </div>
+    
+    <!-- Card 3 -->
+    <div class="superpower-card">
+      <div class="superpower-icon">
+        <i class="fa-solid fa-list-check"></i>
+      </div>
+      <h3>End-to-End Ownership</h3>
+      <p>
+        Acting as the technical lead on state-funded software, coordinating with stakeholders to turn vague requirements into robust, production-ready developer tools.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Technical Toolkit / Skills Section -->
+<section class="container" id="skills" style="padding: 2rem 2rem 4rem 2rem;">
+  <h2 class="section-title">Technical Toolkit</h2>
+  
+  <div class="skills-container">
+    <!-- Category 1 -->
+    <div class="skill-category">
+      <h3>Machine Learning</h3>
+      <div class="skill-tags">
+        <span class="tech-tag-sm">PyTorch</span>
+        <span class="tech-tag-sm">TensorFlow</span>
+        <span class="tech-tag-sm">TensorRT</span>
+        <span class="tech-tag-sm">Computer Vision</span>
+        <span class="tech-tag-sm">SAM (Zero-Shot)</span>
+        <span class="tech-tag-sm">Scikit-Learn</span>
+        <span class="tech-tag-sm">LLMs (Llama)</span>
+      </div>
+    </div>
+    
+    <!-- Category 2 -->
+    <div class="skill-category">
+      <h3>Data Engineering</h3>
+      <div class="skill-tags">
+        <span class="tech-tag-sm">Python (AsyncIO)</span>
+        <span class="tech-tag-sm">Snowflake</span>
+        <span class="tech-tag-sm">PostgreSQL</span>
+        <span class="tech-tag-sm">NumPy/Pandas</span>
+        <span class="tech-tag-sm">Vector Databases</span>
+        <span class="tech-tag-sm">TACC Supercomputing</span>
+      </div>
+    </div>
+    
+    <!-- Category 3 -->
+    <div class="skill-category">
+      <h3>DevOps & Edge</h3>
+      <div class="skill-tags">
+        <span class="tech-tag-sm">Docker</span>
+        <span class="tech-tag-sm">NVIDIA Jetson</span>
+        <span class="tech-tag-sm">CUDA</span>
+        <span class="tech-tag-sm">Linux (Ubuntu)</span>
+        <span class="tech-tag-sm">Bash Shell</span>
+        <span class="tech-tag-sm">Git/CI/CD</span>
+      </div>
+    </div>
+    
+    <!-- Category 4 -->
+    <div class="skill-category">
+      <h3>Software Engineering</h3>
+      <div class="skill-tags">
+        <span class="tech-tag-sm">TypeScript</span>
+        <span class="tech-tag-sm">React</span>
+        <span class="tech-tag-sm">Node.js</span>
+        <span class="tech-tag-sm">Firebase</span>
+        <span class="tech-tag-sm">REST APIs</span>
+        <span class="tech-tag-sm">Zod</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Education Section -->
+<section class="education-section" id="education" style="padding: 4rem 2rem;">
+  <div class="container">
+    <h2 class="section-title" style="text-align: center;">Education</h2>
+    <p class="section-subtitle" style="text-align: center;">Academic foundations in Computer Science</p>
+    
+    <div class="education-card">
+      <div class="education-logo-container">
+        <img src="{{ '/assets/images/utd-logo.png' | relative_url }}" class="education-logo" alt="The University of Texas at Dallas">
+      </div>
+      <div class="education-details">
+        <h3 class="education-degree">Bachelor of Science - BS, Computer Science</h3>
+        <p class="education-school">The University of Texas at Dallas</p>
+        <div class="education-meta">
+          <span class="education-meta-item">
+            <i class="fa-solid fa-graduation-cap"></i> BS, Computer Science
+          </span>
+          <span class="education-meta-item">
+            <i class="fa-solid fa-map-marker-alt"></i> Richardson, TX
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quantitative Impact Banner -->
+<section class="achievements-section" id="achievements">
+  <div class="container">
+    <h2 class="section-title" style="text-align: center; margin-bottom: 3rem;">Achievements & Impact</h2>
+    
+    <div class="achievements-grid">
+      <!-- Stat 1 -->
+      <div class="achievement-stat">
+        <span class="stat-value">Millions</span>
+        <span class="stat-label">Records Processed</span>
+        <span class="stat-desc">Weather & crash database correlation in &lt;48h on TACC Lonestar6</span>
+      </div>
+      
+      <!-- Stat 2 -->
+      <div class="achievement-stat">
+        <span class="stat-value">~30 FPS</span>
+        <span class="stat-label">Edge Inference Speed</span>
+        <span class="stat-desc">Real-time intersection analytics on NVIDIA Jetson modules</span>
+      </div>
+      
+      <!-- Stat 3 -->
+      <div class="achievement-stat">
+        <span class="stat-value">90%</span>
+        <span class="stat-label">Configuration Savings</span>
+        <span class="stat-desc">Reduction in scene configuration times using zero-shot segmentations (SAM)</span>
+      </div>
+      
+      <!-- Stat 4 -->
+      <div class="achievement-stat">
+        <span class="stat-value"><span class="experience-counter">2.2</span> Yrs</span>
+        <span class="stat-label">UT Austin Lead Research</span>
+        <span class="stat-desc">Direct engineering leadership on state-level infrastructure initiatives</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Project Showcase (Main Star of the Show) -->
+<section class="container showcase-section" id="featured-project">
+  <h2 class="section-title">Featured Project</h2>
+  <p class="section-subtitle">My most significant engineering contribution: Leading state-level cloud infrastructure migration</p>
+
+  <div class="featured-showcase-card">
+    <div class="showcase-content">
+      <span class="showcase-badge"><i class="fa-solid fa-star"></i> Main Star of the Show</span>
+      <h3 class="showcase-title">TxDOT Snowflake Migration & Ingestion Platform</h3>
+      <p class="showcase-role">Engineering Research Scientist | UT Austin Center for Transportation Research</p>
+      
+      <p class="showcase-desc">
+        Spearheaded the Texas Department of Transportation's first direct data ingestion pipeline into their Snowflake Enterprise Data Platform. By designing a high-performance Python asyncio, multiprocessing, and NumPy-vectorized architecture, I scaled the system to process millions of NOAA weather and crash records in under 48 hours.
+      </p>
+
+      <div class="showcase-highlights" style="margin-bottom: 1.5rem;">
+        <div class="showcase-highlight-item">
+          <i class="fa-solid fa-bolt"></i>
+          <span>Processes <strong>&gt;20,000 records/min</strong> on standard hardware</span>
+        </div>
+        <div class="showcase-highlight-item">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>Eliminated <strong>4.5% under-reporting bias</strong> in rainfall accuracy</span>
+        </div>
+        <div class="showcase-highlight-item">
+          <i class="fa-solid fa-file-invoice"></i>
+          <span>Research and methodology published in <strong>Transportation Research Board (TRB)</strong></span>
+        </div>
+      </div>
+
+      <div class="showcase-tags">
+        <span class="tech-tag-sm">Python</span>
+        <span class="tech-tag-sm">PostgreSQL</span>
+        <span class="tech-tag-sm">Snowflake</span>
+        <span class="tech-tag-sm">TACC Supercomputing</span>
+        <span class="tech-tag-sm">NumPy</span>
+        <span class="tech-tag-sm">Asynchronous Python</span>
+      </div>
+
+      <div class="showcase-actions">
+        <a href="{{ '/projects/snowflake-migration/' | relative_url }}" class="btn-primary">
+          Read Case Study & System Design <i class="fa-solid fa-arrow-right-long"></i>
+        </a>
+        <a href="{{ '/assets/docs/TRB_Paper.pdf' | relative_url }}" class="btn-secondary" target="_blank">
+          <i class="fa-solid fa-file-pdf"></i> Read TRB Paper
+        </a>
+        <a href="{{ '/assets/docs/TRB_Poster.pptx' | relative_url }}" class="btn-secondary">
+          <i class="fa-solid fa-file-powerpoint"></i> View Poster Presentation
+        </a>
+      </div>
+    </div>
+    <div class="showcase-timeline-container">
+      <h4 class="timeline-title">Project Evolution & Milestones</h4>
+      <div class="vertical-timeline">
+        
+        <!-- Milestone 1 -->
+        <div class="vertical-timeline-item">
+          <div class="vertical-timeline-marker"></div>
+          <div class="vertical-timeline-content">
+            <span class="timeline-date">Feb 2025</span>
+            <h5 class="timeline-event">Pilot Prototype Developed</h5>
+            <p class="timeline-desc">Designed baseline matchup logic correlating crash coordinates with raw gridded NOAA weather cells to verify feasibility for TxDOT.</p>
+          </div>
+        </div>
+
+        <!-- Milestone 2 -->
+        <div class="vertical-timeline-item">
+          <div class="vertical-timeline-marker"></div>
+          <div class="vertical-timeline-content">
+            <span class="timeline-date">Mar 2025</span>
+            <h5 class="timeline-event">TACC Supercomputing Scale-Up</h5>
+            <p class="timeline-desc">Scaled processing using TACC Lonestar6 supercomputer and Slurm job scheduler, running high-performance computations on millions of historical NOAA records.</p>
+          </div>
+        </div>
+
+        <!-- Milestone 3 -->
+        <div class="vertical-timeline-item">
+          <div class="vertical-timeline-marker"></div>
+          <div class="vertical-timeline-content">
+            <span class="timeline-date">Apr 18, 2025</span>
+            <h5 class="timeline-event">Ingestion Strategy Document Published</h5>
+            <p class="timeline-desc">Published report (<code>CTR-TxDOT_CRIS-MRMS_Ingestion_Strategy_v1.0</code>), defining proposed database schemas and ingestion pathways.</p>
+          </div>
+        </div>
+
+        <!-- Milestone 4 -->
+        <div class="vertical-timeline-item">
+          <div class="vertical-timeline-marker"></div>
+          <div class="vertical-timeline-content">
+            <span class="timeline-date">Apr 24, 2025</span>
+            <h5 class="timeline-event">Cross-University Collaboration Kickoff</h5>
+            <p class="timeline-desc">Led kickoff alignment meetings between UT Austin CTR and TTI data maturity teams to bridge research data with enterprise infrastructure.</p>
+          </div>
+        </div>
+
+        <!-- Milestone 5 -->
+        <div class="vertical-timeline-item">
+          <div class="vertical-timeline-marker"></div>
+          <div class="vertical-timeline-content">
+            <span class="timeline-date">Apr 28, 2025</span>
+            <h5 class="timeline-event">Designated as Technical Lead</h5>
+            <p class="timeline-desc">CTR Leadership officially appointed Adam Kosicki as Technical Lead for the weather-to-CRIS/EDP ingestion pipeline.</p>
+          </div>
+        </div>
+
+        <!-- Milestone 6 -->
+        <div class="vertical-timeline-item">
+          <div class="vertical-timeline-marker"></div>
+          <div class="vertical-timeline-content">
+            <span class="timeline-date">Apr 28, 2025</span>
+            <h5 class="timeline-event">Enterprise-Wide Approval & ITD Funding</h5>
+            <p class="timeline-desc">TxDOT ITD approved full funding for DMND0003521, classifying the solution as a statewide, enterprise-wide roadway safety initiative.</p>
+          </div>
+        </div>
+
+        <!-- Milestone 7 -->
+        <div class="vertical-timeline-item">
+          <div class="vertical-timeline-marker"></div>
+          <div class="vertical-timeline-content">
+            <span class="timeline-date">Apr 29, 2025</span>
+            <h5 class="timeline-event">EDP Credentials & Dev Launch</h5>
+            <p class="timeline-desc">Finalized Acceptable Use compliance and received developer credentials for TxDOT's Snowflake Enterprise Data Platform (EDP).</p>
+          </div>
+        </div>
+
+        <!-- Milestone 8 -->
+        <div class="vertical-timeline-item">
+          <div class="vertical-timeline-marker active"></div>
+          <div class="vertical-timeline-content">
+            <span class="timeline-date">May 2025 – Present</span>
+            <h5 class="timeline-event">Snowflake Production Deployment</h5>
+            <p class="timeline-desc">Joined the Snowflake data engineering team. Transitioned pipeline to native Python stored procedures and automated daily tasks inside the EDP.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Other Projects / Case Studies -->
+<section class="container projects-section" id="projects" style="padding-top: 2rem;">
+  <h2 class="section-title">Additional Projects & Case Studies</h2>
+  <p class="section-subtitle">Deep dives into edge AI systems, zero-shot perception stacks, and full-stack web architectures</p>
+  
+  <!-- UT Austin Research Projects -->
+  <div style="margin-bottom: 4rem;">
+    <h3 style="font-family: var(--font-heading); font-size: 1.4rem; color: var(--accent-cyan); margin-bottom: 1.5rem; border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+      <i class="fa-solid fa-building-columns"></i> UT Austin Research Projects
+    </h3>
+    <div class="projects-grid">
+      {% assign sorted_projects = site.projects | sort: 'order' %}
+      {% for project in sorted_projects %}
+        {% if project.title != "TxDOT Snowflake Migration & Ingestion Platform" and project.title != "FitTrack: AI-Powered Biomechanical Taxonomy & NLP Logging Pipeline" %}
+          <article class="project-card">
+            <div class="project-card-header">
+              <div class="project-folder-icon">
+                <i class="fa-regular fa-folder-open"></i>
+              </div>
+              {% if project.hero_metric %}
+                <span class="project-metric-badge">{{ project.hero_metric }}</span>
+              {% endif %}
+            </div>
+            
+            <div class="project-card-body">
+              <span class="project-card-subtitle">{{ project.role }}</span>
+              <h3 class="project-card-title">
+                <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
+              </h3>
+              <p class="project-card-desc">{{ project.description }}</p>
+            </div>
+            
+            <div class="project-card-footer">
+              <div class="project-card-tags">
+                {% for tech in project.tech_stack %}
+                  <span class="tech-tag-sm">{{ tech }}</span>
+                {% endfor %}
+              </div>
+              <a href="{{ project.url | relative_url }}" class="project-card-link">
+                Read Case Study <i class="fa-solid fa-arrow-right-long"></i>
+              </a>
+            </div>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Personal Projects -->
+  <div>
+    <h3 style="font-family: var(--font-heading); font-size: 1.4rem; color: var(--accent-cyan); margin-bottom: 1.5rem; border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+      <i class="fa-solid fa-user"></i> Personal Projects
+    </h3>
+    <div class="projects-grid">
+      {% for project in sorted_projects %}
+        {% if project.title == "FitTrack: AI-Powered Biomechanical Taxonomy & NLP Logging Pipeline" %}
+          <article class="project-card">
+            <div class="project-card-header">
+              <div class="project-folder-icon">
+                <i class="fa-regular fa-folder-open"></i>
+              </div>
+              {% if project.hero_metric %}
+                <span class="project-metric-badge">{{ project.hero_metric }}</span>
+              {% endif %}
+            </div>
+            
+            <div class="project-card-body">
+              <span class="project-card-subtitle">{{ project.role }}</span>
+              <h3 class="project-card-title">
+                <a href="{{ project.url | relative_url }}">{{ project.title }}</a>
+              </h3>
+              <p class="project-card-desc">{{ project.description }}</p>
+            </div>
+            
+            <div class="project-card-footer">
+              <div class="project-card-tags">
+                {% for tech in project.tech_stack %}
+                  <span class="tech-tag-sm">{{ tech }}</span>
+                {% endfor %}
+              </div>
+              <a href="{{ project.url | relative_url }}" class="project-card-link">
+                Read Case Study <i class="fa-solid fa-arrow-right-long"></i>
+              </a>
+            </div>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Open Source Contributions Section -->
+<section class="container" id="open-source" style="padding: 4rem 2rem 6rem 2rem;">
+  <h2 class="section-title" style="text-align: center;">Open-Source Contributions</h2>
+  <p class="section-subtitle" style="text-align: center;">Active contributions to industry-standard machine learning and computer vision frameworks</p>
+  
+  <div class="contribution-card">
+    <div class="contribution-header">
+      <div class="repo-info">
+        <i class="fa-brands fa-github repo-icon"></i>
+        <div>
+          <span class="repo-owner">Megvii-BaseDetection</span> / <span class="repo-name">YOLOX</span>
+        </div>
+      </div>
+      <a href="https://github.com/Megvii-BaseDetection/YOLOX/pull/1869" target="_blank" rel="noopener noreferrer" class="pr-badge">
+        Pull Request #1869 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+    </div>
+    
+    <div class="contribution-body">
+      <h3 class="contribution-title">Fix MPS (Apple Silicon) Backend Inference Crash & Device Alignment</h3>
+      
+      <p class="contribution-desc">
+        Identified and patched a framework-level bug causing runtime execution failure of YOLOX object detection models on Apple Silicon (M1/M2/M3/M4) devices when executing PyTorch's Metal Performance Shaders (MPS) backend.
+      </p>
+      
+      <div class="contribution-details-grid">
+        <div class="contribution-detail-item">
+          <h4 style="color: #f87171;"><i class="fa-solid fa-bug"></i> The Challenge</h4>
+          <p>
+            Legacy PyTorch calls to <code>Tensor.type()</code> return <code>'torch.mps.FloatTensor'</code> on macOS devices, which is not registered in the framework's type casting map, crashing inference. A secondary bug in <code>decode_outputs()</code> generated coordinate grid/stride tensors on the CPU instead of allocating them on the active MPS device, producing a device-mismatch <code>RuntimeError</code>.
+          </p>
+        </div>
+        <div class="contribution-detail-item">
+          <h4 style="color: #34d399;"><i class="fa-solid fa-circle-check"></i> The Solution</h4>
+          <p>
+            Modernized device/type handling across <code>yolo_head.py</code>: switched legacy type-string checks to <code>Tensor.dtype</code> objects and resolved device alignment by using device-aware <code>.to(device=..., dtype=...)</code> syntax. Verified backward compatibility on standard CUDA/CPU configurations.
+          </p>
+        </div>
+      </div>
+
+      <div class="code-diff-table-wrapper">
+        <table class="code-diff-table">
+          <thead>
+            <tr>
+              <th>Location</th>
+              <th>Legacy Code (Crashed on MPS)</th>
+              <th>Modern API (MPS / CUDA / CPU)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>yolo_head.py</code>: L211</td>
+              <td class="diff-removed"><code>xin[0].type()</code></td>
+              <td class="diff-added"><code>xin[0].dtype</code></td>
+            </tr>
+            <tr>
+              <td><code>yolo_head.py</code>: L223</td>
+              <td class="diff-removed"><code>.type(dtype)</code></td>
+              <td class="diff-added"><code>.to(device=output.device, dtype=dtype)</code></td>
+            </tr>
+            <tr>
+              <td><code>yolo_head.py</code>: L245-246</td>
+              <td class="diff-removed"><code>.type(dtype)</code></td>
+              <td class="diff-added"><code>.to(device=outputs.device, dtype=dtype)</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="contribution-footer">
+        <div class="validation-badge">
+          <i class="fa-solid fa-square-check" style="color: var(--success);"></i>
+          <span>Verified on Apple M2 (macOS): YOLOX-X MOT20 inference runs successfully at <strong>~1.7 FPS</strong></span>
+        </div>
+        <a href="https://github.com/Megvii-BaseDetection/YOLOX/pull/1869" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+          <i class="fa-brands fa-github"></i> View Pull Request
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    // Start date at UT Austin CTR (February 2024)
+    const startDate = new Date('2024-02-01');
+    const currentDate = new Date();
+    const diffTime = Math.abs(currentDate - startDate);
+    // 365.25 accounts for leap years
+    const diffYears = diffTime / (1000 * 60 * 60 * 24 * 365.25);
+    const formattedYears = diffYears.toFixed(1);
+    
+    document.querySelectorAll('.experience-counter').forEach(el => {
+      el.textContent = formattedYears;
+    });
+  })();
+</script>

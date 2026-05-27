@@ -1,0 +1,37 @@
+# Site settings
+title: "Adam Kosicki | Engineering Research Scientist"
+email: "adamjkosicki@gmail.com"
+description: >- # this means to ignore newlines until "baseurl:"
+  Research Scientist at UT Austin specializing in production-grade data pipelines, 
+  high-performance computing, and edge AI solutions.
+baseurl: "" # the subpath of your site, e.g. /portfolio. Leave empty "" if hosting as adam-kosicki.github.io
+url: "https://adam-kosicki.github.io" # the base hostname & protocol for your site
+
+# Author information
+author:
+  name: "Adam Kosicki"
+  title: "Engineering Research Scientist"
+  location: "Austin / Round Rock, TX"
+  github: "adam-kosicki"
+  linkedin: "adam-kosicki"
+  email: "adamjkosicki@gmail.com"
+
+# Collections configuration for projects/case studies
+collections:
+  projects:
+    output: true
+    permalink: /projects/:path/
+
+# Markdown setting
+markdown: kramdown
+highlighter: rouge
+
+# Exclusions
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/

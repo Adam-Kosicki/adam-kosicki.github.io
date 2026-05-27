@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  
+  <!-- Preconnecting Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+
+  <!-- Premium Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="{{ '/' | relative_url }}" class="site-logo">
+        <span class="logo-accent">&lt;</span>Adam Kosicki<span class="logo-accent"> /&gt;</span>
+      </a>
+      
+      <!-- Desktop Navigation -->
+      <nav class="desktop-nav">
+        <a href="{{ '/' | relative_url }}#about">About</a>
+        <a href="{{ '/' | relative_url }}#education">Education</a>
+        <a href="{{ '/' | relative_url }}#open-source">Open Source</a>
+        <a href="{{ '/' | relative_url }}#projects">Projects</a>
+        <a href="mailto:{{ site.author.email }}" class="btn-primary-sm">Get in Touch</a>
+      </nav>
+
+      <!-- Mobile Nav Toggle -->
+      <button class="mobile-nav-toggle" aria-label="Toggle Menu" id="mobile-toggle">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Dropdown Navigation -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="{{ '/' | relative_url }}#about" class="mobile-link">About</a>
+    <a href="{{ '/' | relative_url }}#education" class="mobile-link">Education</a>
+    <a href="{{ '/' | relative_url }}#open-source" class="mobile-link">Open Source</a>
+    <a href="{{ '/' | relative_url }}#projects" class="mobile-link">Projects</a>
+    <a href="mailto:{{ site.author.email }}" class="mobile-btn">Get in Touch</a>
+  </div>
+
+  <!-- Page Content -->
+  <main class="site-main">
+    {{ content }}
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-info">
+        <p class="footer-name">Adam Kosicki</p>
+        <p class="footer-tagline">Engineering Research Scientist</p>
+      </div>
+      
+      <div class="footer-links">
+        <a href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://linkedin.com/in/{{ site.author.linkedin }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+        <a href="mailto:{{ site.author.email }}" aria-label="Email">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; {{ 'now' | date: "%Y" }} Adam Kosicki. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Light client-side JS for interactions -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleBtn = document.getElementById('mobile-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      toggleBtn.addEventListener('click', function() {
+        mobileMenu.classList.toggle('active');
+        const icon = toggleBtn.querySelector('i');
+        if (mobileMenu.classList.contains('active')) {
+          icon.classList.remove('fa-bars');
+          icon.classList.add('fa-xmark');
+        } else {
+          icon.classList.remove('fa-xmark');
+          icon.classList.add('fa-bars');
+        }
+      });
+
+      // Close menu when clicking links
+      const links = mobileMenu.querySelectorAll('a');
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('active');
+          toggleBtn.querySelector('i').classList.remove('fa-xmark');
+          toggleBtn.querySelector('i').classList.add('fa-bars');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
