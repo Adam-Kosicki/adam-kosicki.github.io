@@ -44,6 +44,6 @@ The entire platform is orchestrated using **Docker Compose** for seamless deploy
 - **High-Throughput Data Bridge:** Engineered an asynchronous data pipeline that streams live JSON telemetry directly into Pandas DataFrames, optimizing bulk upserts into PostgreSQL.
 - **Reduced Latency:** The implementation of Redis caching drastically reduced redundant upstream data extractions, enabling the platform to achieve the strict low-latency requirements for "Data-2" realtime streaming.
 - **Scalable Infrastructure:** Designed the system to be deployable on edge computing nodes (like NVIDIA Jetsons) as well as TACC supercomputing clusters using distributed message passing.
-- **Enterprise Adoption:** RIDI now acts as the central data nervous system for validating connected vehicle technologies and powering statewide operational dashboards.
+- **Research & Prototyping Success:** RIDI serves as the foundational digital framework for the Texas SMARTTrack (TST) initiative, successfully powering live prototype applications (e.g., Austin IH-35 Congestion Analysis) and validating historical travel time reliability for the City of Austin.
 
 ---
