@@ -43,6 +43,18 @@ The front-end user interface is built using a combination of **R Shiny**, **Leaf
 
 ---
 
+## Dashboard Capabilities & Predictive Modeling
+
+The web application serves as a comprehensive visual portal for evaluating short-term travel time prediction models across four major Texas highway corridors (IH-35 and SH-130 in Austin, IH-10 and SL-375 in El Paso). The platform empowers planners to define custom routes between specific entry and exit points to seamlessly analyze full-corridor travel times.
+
+**Key Features Demonstrated in the Video:**
+- **Real-Time vs. Predictive Analysis:** The interface dynamically plots "realized" travel times against multiple predictive Machine Learning (ML) models and legacy "current practice" baseline models. Planners can easily visualize anomalies and see exactly when current travel times deviate from typical historical conditions.
+- **Long-Term Performance Metrics:** The system evaluates the long-term accuracy of these ML models over a multi-month period (e.g., since January 2024). Users can benchmark model performance using robust statistical metrics including Mean Absolute Error (MAE), Mean Absolute Percentage Error (MAPE), and Root Mean Square Error (RMSE). 
+- **Peak-Period Superiority:** The interactive plots clearly demonstrate that the integrated ML models significantly outperform legacy practices, particularly during highly congested peak traffic periods where precision matters most.
+- **Data Availability & Decision Support:** A dedicated summary dashboard tracks data availability and model uptime, supporting transparent data sharing decisions. By comparing the latest predictions alongside historical accuracy, TxDOT engineers can confidently select the most reliable travel time prediction to post for public awareness.
+
+---
+
 ## Impact and Key Accomplishments
 
 - **Streamlined Workflow:** Provided TxDOT engineers with a unified visual tool to pinpoint the precise impact of work zone closures on daily commute times, replacing ad-hoc manual data extractions.
