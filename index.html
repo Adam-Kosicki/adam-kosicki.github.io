@@ -203,7 +203,7 @@ title: Home
 
 <!-- Featured Project Showcase (Main Star of the Show) -->
 <section class="container showcase-section" id="featured-project">
-  <h2 class="section-title">Featured Projects</h2>
+  <h2 class="section-title">TOP 3 Projects</h2>
   <p class="section-subtitle">My most significant engineering contributions and full-stack solutions</p>
 
   <div class="featured-showcase-card">
@@ -389,6 +389,54 @@ title: Home
       <p style="font-size: 0.85rem; color: #888; margin-top: 1.5rem; font-style: italic; text-align: center;"><strong>Dashboard Demo:</strong> A live demonstration of the application in action.</p>
     </div>
   </div>
+  <!-- Featured Project 3: RIDI -->
+  <div class="featured-showcase-card" style="margin-top: 4rem;">
+    <div class="showcase-content">
+      <span class="showcase-badge" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; border: 1px solid rgba(139, 92, 246, 0.2);"><i class="fa-solid fa-server"></i> Featured Project</span>
+      <h3 class="showcase-title">RIDI: Real-Time Data Integration Framework</h3>
+      <p class="showcase-role">Engineering Scientist | TxDOT / UT Austin</p>
+      
+      <p class="showcase-desc">
+        Architected a multi-stage ETL data lake and high-throughput asynchronous REST API to process massive streams of connected vehicle telemetry and C2C traffic sensors for the Texas Department of Transportation.
+      </p>
+
+      <div class="showcase-highlights" style="margin-bottom: 1.5rem;">
+        <div class="showcase-highlight-item">
+          <i class="fa-solid fa-bolt"></i>
+          <span><strong>High-Throughput Async Backend</strong> using FastAPI and SQLAlchemy</span>
+        </div>
+        <div class="showcase-highlight-item">
+          <i class="fa-solid fa-database"></i>
+          <span><strong>Multi-Stage ETL Data Lake</strong> powered by Redis caching</span>
+        </div>
+        <div class="showcase-highlight-item">
+          <i class="fa-solid fa-network-wired"></i>
+          <span><strong>Distributed Task Processing</strong> utilizing Celery queues</span>
+        </div>
+      </div>
+
+      <div class="showcase-tags">
+        <span class="tech-tag-sm">FastAPI</span>
+        <span class="tech-tag-sm">PostgreSQL</span>
+        <span class="tech-tag-sm">Redis</span>
+        <span class="tech-tag-sm">Celery</span>
+        <span class="tech-tag-sm">Docker</span>
+      </div>
+
+      <div class="showcase-actions">
+        <a href="{{ '/projects/ridi-data-integration-framework/' | relative_url }}" class="btn-primary">
+          Read Case Study & System Design <i class="fa-solid fa-arrow-right-long"></i>
+        </a>
+      </div>
+    </div>
+    
+    <div class="showcase-timeline-container" style="display: flex; flex-direction: column; justify-content: center; padding: 1rem;">
+      <div style="position: relative; max-width: 100%; border-radius: 8px; border: 1px solid var(--card-border); box-shadow: 0 4px 20px rgba(0,0,0,0.15); overflow: hidden;">
+        <img src="{{ '/assets/images/ridi_architecture.png' | relative_url }}" alt="RIDI Data Architecture Diagram" style="width: 100%; height: auto; display: block;">
+      </div>
+      <p style="font-size: 0.85rem; color: #888; margin-top: 1.5rem; font-style: italic; text-align: center;"><strong>System Architecture:</strong> Conceptual diagram of the multi-stage asynchronous data pipeline.</p>
+    </div>
+  </div>
 </section>
 
 <!-- Other Projects / Case Studies -->
@@ -404,7 +452,7 @@ title: Home
     <div class="projects-grid">
       {% assign sorted_projects = site.projects | sort: 'order' %}
       {% for project in sorted_projects %}
-        {% if project.title != "TxDOT Snowflake Migration & Ingestion Platform" and project.title != "FitTrack: AI-Powered Biomechanical Taxonomy & NLP Logging Pipeline" and project.title != "WZDx & INRIX Travel Time Dashboard" %}
+        {% if project.title != "TxDOT Snowflake Migration & Ingestion Platform" and project.title != "FitTrack: AI-Powered Biomechanical Taxonomy & NLP Logging Pipeline" and project.title != "WZDx & INRIX Travel Time Dashboard" and project.title != "RIDI: Real-Time Data Integration Framework" %}
           <article class="project-card">
             <div class="project-card-header">
               <div class="project-folder-icon">
