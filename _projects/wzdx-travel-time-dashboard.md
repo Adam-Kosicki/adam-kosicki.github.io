@@ -69,7 +69,6 @@ The web application serves as a comprehensive visual portal for evaluating short
   <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 8px; border: 1px solid var(--card-border); box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
     <iframe src="https://www.youtube.com/embed/bf5KoMFYjXE?autoplay=0&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
   </div>
-  <p style="font-size: 0.85rem; color: #888; margin-top: 0.5rem; font-style: italic;"><strong>Dashboard Demo:</strong> A live demonstration of the WZDx & INRIX Travel Time Dashboard in action.</p>
 </div>
 
 <div class="project-image-container" style="text-align: center; margin: 2rem 0;">
