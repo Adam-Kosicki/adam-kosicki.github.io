@@ -289,6 +289,15 @@ a {
   -webkit-text-fill-color: transparent;
 }
 
+.hero-role {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.5px;
+}
+
 .hero-desc {
   font-size: 1.2rem;
   color: var(--text-secondary);
@@ -1317,6 +1326,131 @@ a {
   user-select: none;
 }
 
+/* --- What Drives Me / Interests Section --- */
+.interests-section {
+  padding: 4rem 0 2rem 0;
+}
+
+.interests-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.interest-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 2.25rem 2rem;
+  transition: var(--transition-smooth);
+}
+
+.interest-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--card-border-glow);
+  box-shadow: 0 10px 30px rgba(0, 242, 254, 0.05);
+}
+
+.interest-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: rgba(0, 242, 254, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.interest-icon i {
+  font-size: 1.2rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.interest-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.interest-card p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+/* --- Off the Clock / About Me Section --- */
+.about-me-section {
+  padding: 4rem 0 6rem 0;
+}
+
+.about-me-card {
+  display: grid;
+  grid-template-columns: 0.4fr 0.6fr;
+  gap: 3rem;
+  align-items: center;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: var(--transition-smooth);
+}
+
+.about-me-card:hover {
+  border-color: var(--card-border-glow);
+  box-shadow: 0 10px 30px rgba(0, 242, 254, 0.05);
+}
+
+.about-me-image-container {
+  width: 100%;
+}
+
+.about-me-image-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 16px;
+  background: rgba(0, 242, 254, 0.03);
+  border: 2px dashed rgba(0, 242, 254, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: var(--text-muted);
+  transition: var(--transition-smooth);
+}
+
+.about-me-image-placeholder:hover {
+  border-color: rgba(0, 242, 254, 0.3);
+  background: rgba(0, 242, 254, 0.04);
+}
+
+.about-me-image-placeholder i {
+  font-size: 2.5rem;
+  color: rgba(0, 242, 254, 0.3);
+}
+
+.about-me-image-placeholder span {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.about-me-content p {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+
+.about-me-content p:last-child {
+  margin-bottom: 0;
+}
+
 /* --- Responsive Adjustments --- */
 @media (max-width: 992px) {
   .featured-showcase-card {
@@ -1420,6 +1554,30 @@ a {
 
   .github-stats-title {
     font-size: 1.5rem;
+  }
+
+  .interests-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-me-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .about-me-image-placeholder {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .hero-title {
+    font-size: 2.8rem;
+  }
+
+  .hero-role {
+    font-size: 1.1rem;
   }
 }
 
