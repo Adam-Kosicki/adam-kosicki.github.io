@@ -37,6 +37,100 @@ title: Home
   </div>
 </section>
 
+<!-- GitHub Activity Stats Banner -->
+<section class="github-stats-section" id="github-activity">
+  <div class="container">
+    <div class="github-stats-header">
+      <div class="github-stats-title-group">
+        <i class="fa-brands fa-github github-stats-icon"></i>
+        <div>
+          <h2 class="github-stats-title">GitHub Activity</h2>
+          <p class="github-stats-subtitle">Live stats from <a href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">@{{ site.author.github }}</a></p>
+        </div>
+      </div>
+      <a href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer" class="github-profile-link">
+        <span>View Profile</span>
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+    </div>
+
+    <div class="github-stats-grid">
+      <!-- Stat: Contributions This Year -->
+      <div class="github-stat-card github-stat-highlight" id="gh-contributions-card">
+        <div class="github-stat-icon-wrapper">
+          <i class="fa-solid fa-code-commit"></i>
+        </div>
+        <div class="github-stat-content">
+          <span class="github-stat-value" id="gh-contributions-count">
+            <span class="stat-loading-pulse"></span>
+          </span>
+          <span class="github-stat-label">Contributions in <span id="gh-year">2026</span></span>
+        </div>
+      </div>
+
+      <!-- Stat: Public Repos -->
+      <div class="github-stat-card" id="gh-repos-card">
+        <div class="github-stat-icon-wrapper">
+          <i class="fa-solid fa-book-bookmark"></i>
+        </div>
+        <div class="github-stat-content">
+          <span class="github-stat-value" id="gh-repos-count">
+            <span class="stat-loading-pulse"></span>
+          </span>
+          <span class="github-stat-label">Public Repositories</span>
+        </div>
+      </div>
+
+      <!-- Stat: Current Streak -->
+      <div class="github-stat-card" id="gh-streak-card">
+        <div class="github-stat-icon-wrapper">
+          <i class="fa-solid fa-fire-flame-curved"></i>
+        </div>
+        <div class="github-stat-content">
+          <span class="github-stat-value" id="gh-streak-count">
+            <span class="stat-loading-pulse"></span>
+          </span>
+          <span class="github-stat-label">Day Streak</span>
+        </div>
+      </div>
+
+      <!-- Stat: Stars Earned -->
+      <div class="github-stat-card" id="gh-stars-card">
+        <div class="github-stat-icon-wrapper">
+          <i class="fa-solid fa-star"></i>
+        </div>
+        <div class="github-stat-content">
+          <span class="github-stat-value" id="gh-stars-count">
+            <span class="stat-loading-pulse"></span>
+          </span>
+          <span class="github-stat-label">Stars Earned</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contribution Graph -->
+    <div class="github-graph-container">
+      <div class="github-graph-card">
+        <div class="github-graph-header">
+          <span class="github-graph-label"><i class="fa-solid fa-chart-area"></i> Contribution Activity</span>
+          <span class="github-graph-live-badge">
+            <span class="live-dot"></span> Live
+          </span>
+        </div>
+        <div class="github-graph-wrapper" id="gh-contribution-graph">
+          <img
+            src="https://ghchart.rshah.org/00f2fe/{{ site.author.github }}"
+            alt="GitHub Contribution Graph for {{ site.author.name }}"
+            class="github-contribution-chart"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- Superpowers / Core Focus Section -->
 <section class="container" style="padding: 4rem 2rem 1rem 2rem;">
   <h2 class="section-title">Core Engineering Strengths</h2>
@@ -614,16 +708,161 @@ title: Home
 
 <script>
   (function() {
-    // Start date at UT Austin CTR (February 2024)
+    // --- Experience Counter ---
     const startDate = new Date('2024-02-01');
     const currentDate = new Date();
     const diffTime = Math.abs(currentDate - startDate);
-    // 365.25 accounts for leap years
     const diffYears = diffTime / (1000 * 60 * 60 * 24 * 365.25);
     const formattedYears = diffYears.toFixed(1);
     
     document.querySelectorAll('.experience-counter').forEach(el => {
       el.textContent = formattedYears;
     });
+
+    // --- GitHub Stats ---
+    const GITHUB_USERNAME = '{{ site.author.github }}';
+    const currentYear = new Date().getFullYear();
+    
+    // Update the year display
+    const yearEl = document.getElementById('gh-year');
+    if (yearEl) yearEl.textContent = currentYear;
+
+    // Animated counter effect
+    function animateValue(el, target, suffix) {
+      suffix = suffix || '';
+      const duration = 1200;
+      const start = performance.now();
+      const startVal = 0;
+      
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(startVal + (target - startVal) * eased);
+        el.textContent = current.toLocaleString() + suffix;
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    // Set stat value with animation
+    function setStat(id, value, suffix) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (typeof value === 'number') {
+        animateValue(el, value, suffix);
+      } else {
+        el.textContent = value;
+      }
+      // Add loaded class for entrance animation
+      const card = el.closest('.github-stat-card');
+      if (card) card.classList.add('loaded');
+    }
+
+    // Fetch public user data from GitHub REST API
+    async function fetchGitHubStats() {
+      try {
+        // Fetch user profile
+        const userRes = await fetch('https://api.github.com/users/' + GITHUB_USERNAME);
+        if (!userRes.ok) throw new Error('GitHub API error');
+        const userData = await userRes.json();
+        
+        setStat('gh-repos-count', userData.public_repos || 0);
+
+        // Fetch repos to calculate total stars
+        let totalStars = 0;
+        let page = 1;
+        let hasMore = true;
+        
+        while (hasMore) {
+          const reposRes = await fetch(
+            'https://api.github.com/users/' + GITHUB_USERNAME + '/repos?per_page=100&page=' + page
+          );
+          if (!reposRes.ok) break;
+          const repos = await reposRes.json();
+          if (repos.length === 0) break;
+          
+          repos.forEach(function(repo) {
+            totalStars += repo.stargazers_count || 0;
+          });
+          
+          hasMore = repos.length === 100;
+          page++;
+        }
+        
+        setStat('gh-stars-count', totalStars);
+
+      } catch (err) {
+        console.warn('GitHub API fetch failed:', err);
+        setStat('gh-repos-count', '—');
+        setStat('gh-stars-count', '—');
+      }
+    }
+
+    // Fetch contribution count from GitHub profile page
+    async function fetchContributions() {
+      try {
+        // Use the GitHub contributions API via a public service
+        const res = await fetch(
+          'https://github-contributions-api.jogruber.de/v4/' + GITHUB_USERNAME + '?y=' + currentYear
+        );
+        if (!res.ok) throw new Error('Contributions API error');
+        const data = await res.json();
+        
+        const totalContributions = data.total && data.total[currentYear] 
+          ? data.total[currentYear] 
+          : Object.values(data.total || {}).reduce(function(a, b) { return a + b; }, 0);
+        
+        setStat('gh-contributions-count', totalContributions || 0);
+
+        // Calculate current streak from contribution data
+        if (data.contributions && data.contributions.length > 0) {
+          let streak = 0;
+          // Sort contributions by date descending
+          const sorted = data.contributions
+            .slice()
+            .sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
+          
+          // Check from today backwards
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          
+          for (var i = 0; i < sorted.length; i++) {
+            var contribDate = new Date(sorted[i].date);
+            contribDate.setHours(0, 0, 0, 0);
+            
+            // Skip future dates
+            if (contribDate > today) continue;
+            
+            // For today, allow 0 contributions (day isn't over yet)
+            if (contribDate.getTime() === today.getTime()) {
+              if (sorted[i].count > 0) streak++;
+              continue;
+            }
+            
+            if (sorted[i].count > 0) {
+              streak++;
+            } else {
+              break;
+            }
+          }
+          
+          setStat('gh-streak-count', streak);
+        } else {
+          setStat('gh-streak-count', 0);
+        }
+
+      } catch (err) {
+        console.warn('Contributions fetch failed:', err);
+        setStat('gh-contributions-count', '—');
+        setStat('gh-streak-count', '—');
+      }
+    }
+
+    // Initialize
+    fetchGitHubStats();
+    fetchContributions();
   })();
 </script>
+
