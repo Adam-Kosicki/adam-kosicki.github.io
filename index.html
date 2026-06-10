@@ -719,223 +719,309 @@ title: Home
 <script>
   (function() {
     // --- Experience Counter ---
-    const startDate = new Date('2024-02-01');
-    const currentDate = new Date();
-    const diffTime = Math.abs(currentDate - startDate);
-    const diffYears = diffTime / (1000 * 60 * 60 * 24 * 365.25);
-    const formattedYears = diffYears.toFixed(1);
-    
-    document.querySelectorAll('.experience-counter').forEach(el => {
-      el.textContent = formattedYears;
+    var startDate = new Date('2024-02-01');
+    var now = new Date();
+    var diffTime = Math.abs(now - startDate);
+    var diffYears = diffTime / (1000 * 60 * 60 * 24 * 365.25);
+    document.querySelectorAll('.experience-counter').forEach(function(el) {
+      el.textContent = diffYears.toFixed(1);
     });
 
     // --- GitHub Stats ---
-    const GITHUB_USERNAME = '{{ site.author.github }}';
-    const currentYear = new Date().getFullYear();
-    
-    // Update the year display
-    const yearEl = document.getElementById('gh-year');
+    var GITHUB_USERNAME = '{{ site.author.github }}';
+    var currentYear = new Date().getFullYear();
+    var EARLIEST_YEAR = 2023;
+    var API_BASE = 'https://github-contributions-api.jogruber.de/v4/';
+    var MS_PER_DAY = 86400000;
+
+    // Update the year display in the contributions stat card
+    var yearEl = document.getElementById('gh-year');
     if (yearEl) yearEl.textContent = currentYear;
 
-    // Animated counter effect
+    // Cache for contribution data by year
+    var contribCache = {};
+
+    // --- Animated counter effect ---
     function animateValue(el, target, suffix) {
       suffix = suffix || '';
-      const duration = 1200;
-      const start = performance.now();
-      const startVal = 0;
-      
-      function update(now) {
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / duration, 1);
-        // Ease out cubic
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const current = Math.round(startVal + (target - startVal) * eased);
+      var duration = 1200;
+      var startTime = performance.now();
+      function update(ts) {
+        var elapsed = ts - startTime;
+        var progress = Math.min(elapsed / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.round(target * eased);
         el.textContent = current.toLocaleString() + suffix;
         if (progress < 1) requestAnimationFrame(update);
       }
       requestAnimationFrame(update);
     }
 
-    // Set stat value with animation
     function setStat(id, value, suffix) {
-      const el = document.getElementById(id);
+      var el = document.getElementById(id);
       if (!el) return;
       if (typeof value === 'number') {
         animateValue(el, value, suffix);
       } else {
         el.textContent = value;
       }
-      // Add loaded class for entrance animation
-      const card = el.closest('.github-stat-card');
+      var card = el.closest('.github-stat-card');
       if (card) card.classList.add('loaded');
     }
 
-    // Fetch public user data from GitHub REST API
-    async function fetchGitHubStats() {
-      try {
-        // Fetch user profile
-        const userRes = await fetch('https://api.github.com/users/' + GITHUB_USERNAME);
-        if (!userRes.ok) throw new Error('GitHub API error');
-        const userData = await userRes.json();
-        
-        setStat('gh-repos-count', userData.public_repos || 0);
-
-        // Fetch repos to calculate total stars
-        let totalStars = 0;
-        let page = 1;
-        let hasMore = true;
-        
-        while (hasMore) {
-          const reposRes = await fetch(
-            'https://api.github.com/users/' + GITHUB_USERNAME + '/repos?per_page=100&page=' + page
-          );
-          if (!reposRes.ok) break;
-          const repos = await reposRes.json();
-          if (repos.length === 0) break;
-          
-          repos.forEach(function(repo) {
-            totalStars += repo.stargazers_count || 0;
-          });
-          
-          hasMore = repos.length === 100;
-          page++;
-        }
-        
-        setStat('gh-stars-count', totalStars);
-
-      } catch (err) {
-        console.warn('GitHub API fetch failed:', err);
-        setStat('gh-repos-count', '—');
-        setStat('gh-stars-count', '—');
-      }
+    // --- Fetch contribution data for a specific year (cached) ---
+    function fetchYearData(year) {
+      if (contribCache[year]) return Promise.resolve(contribCache[year]);
+      return fetch(API_BASE + GITHUB_USERNAME + '?y=' + year)
+        .then(function(res) {
+          if (!res.ok) throw new Error('API error for ' + year);
+          return res.json();
+        })
+        .then(function(data) {
+          contribCache[year] = data;
+          return data;
+        });
     }
 
-    // Fetch contribution count from GitHub profile page
-    async function fetchContributions() {
-      try {
-        // Use the GitHub contributions API via a public service
-        const res = await fetch(
-          'https://github-contributions-api.jogruber.de/v4/' + GITHUB_USERNAME + '?y=' + currentYear
-        );
-        if (!res.ok) throw new Error('Contributions API error');
-        const data = await res.json();
-        
-        const totalContributions = data.total && data.total[currentYear] 
-          ? data.total[currentYear] 
-          : Object.values(data.total || {}).reduce(function(a, b) { return a + b; }, 0);
-        
-        setStat('gh-contributions-count', totalContributions || 0);
+    // --- Custom SVG Contribution Heatmap Renderer ---
+    function renderHeatmapSVG(contributions, year) {
+      var cellSize = 11;
+      var gap = 3;
+      var step = cellSize + gap;
+      var labelHeight = 18;
+      var colors = [
+        'rgba(255,255,255,0.04)',
+        'rgba(0,242,254,0.2)',
+        'rgba(0,242,254,0.4)',
+        'rgba(0,242,254,0.65)',
+        'rgba(0,242,254,0.95)'
+      ];
+      var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-        // Calculate LONGEST streak from contribution data
-        if (data.contributions && data.contributions.length > 0) {
-          // Sort contributions by date ascending for sequential scan
-          const sorted = data.contributions
-            .slice()
-            .sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
-          
-          let longestStreak = 0;
-          let currentStreak = 0;
-          let prevDate = null;
-
-          for (var i = 0; i < sorted.length; i++) {
-            if (sorted[i].count > 0) {
-              if (prevDate) {
-                var prev = new Date(prevDate);
-                var curr = new Date(sorted[i].date);
-                prev.setHours(0, 0, 0, 0);
-                curr.setHours(0, 0, 0, 0);
-                var diffDays = Math.round((curr - prev) / (1000 * 60 * 60 * 24));
-                
-                if (diffDays === 1) {
-                  currentStreak++;
-                } else {
-                  // Gap in contributions — reset streak
-                  currentStreak = 1;
-                }
-              } else {
-                currentStreak = 1;
-              }
-              prevDate = sorted[i].date;
-              if (currentStreak > longestStreak) {
-                longestStreak = currentStreak;
-              }
-            } else {
-              currentStreak = 0;
-              prevDate = null;
-            }
-          }
-          
-          setStat('gh-streak-count', longestStreak);
-        } else {
-          setStat('gh-streak-count', 0);
-        }
-
-      } catch (err) {
-        console.warn('Contributions fetch failed:', err);
-        setStat('gh-contributions-count', '—');
-        setStat('gh-streak-count', '—');
+      if (!contributions || contributions.length === 0) {
+        return '<p style="color:#6b7280;text-align:center;padding:1rem;">No contribution data available for ' + year + '</p>';
       }
+
+      // Sort chronologically using string comparison (YYYY-MM-DD sorts correctly)
+      var sorted = contributions.slice().sort(function(a, b) {
+        return a.date.localeCompare(b.date);
+      });
+
+      var startOfYear = new Date(year, 0, 1);
+      var startDow = startOfYear.getDay(); // 0=Sun ... 6=Sat
+
+      // Build cells
+      var rects = '';
+      var maxCol = 0;
+      for (var i = 0; i < sorted.length; i++) {
+        var day = sorted[i];
+        var parts = day.date.split('-');
+        var d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+        var doy = Math.floor((d - startOfYear) / MS_PER_DAY);
+        var offset = doy + startDow;
+        var col = Math.floor(offset / 7);
+        var row = offset % 7;
+        if (col > maxCol) maxCol = col;
+        var x = col * step;
+        var y = row * step + labelHeight;
+        var level = Math.min(day.level || 0, 4);
+        var color = colors[level];
+        var title = day.date + ': ' + day.count + ' contribution' + (day.count !== 1 ? 's' : '');
+        rects += '<rect x="' + x + '" y="' + y + '" width="' + cellSize + '" height="' + cellSize + '" rx="2" ry="2" fill="' + color + '"><title>' + title + '</title></rect>';
+      }
+
+      // Month labels
+      var monthLabels = '';
+      var today = new Date();
+      for (var m = 0; m < 12; m++) {
+        var firstOfMonth = new Date(year, m, 1);
+        if (firstOfMonth > today) break;
+        var mDoy = Math.floor((firstOfMonth - startOfYear) / MS_PER_DAY);
+        var mCol = Math.floor((mDoy + startDow) / 7);
+        monthLabels += '<text x="' + (mCol * step) + '" y="10" fill="#6b7280" font-size="10" font-family="Inter,sans-serif">' + monthNames[m] + '</text>';
+      }
+
+      // SVG dimensions
+      var svgWidth = (maxCol + 1) * step - gap;
+      var svgHeight = 7 * step - gap + labelHeight;
+
+      return '<svg viewBox="0 0 ' + svgWidth + ' ' + svgHeight + '" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto" role="img" aria-label="GitHub contribution heatmap for ' + year + '">' + monthLabels + rects + '</svg>';
     }
 
-    // --- Contribution Graph Year Navigation ---
-    const EARLIEST_YEAR = 2023; // Earliest year to allow browsing
-    let graphYear = currentYear;
+    // --- Update the contribution graph for a given year ---
+    var graphYear = currentYear;
+    var graphWrapper = document.getElementById('gh-contribution-graph');
+    var graphYearDisplay = document.getElementById('gh-graph-year-display');
+    var prevBtn = document.getElementById('gh-year-prev');
+    var nextBtn = document.getElementById('gh-year-next');
+    var liveBadge = document.getElementById('gh-live-badge');
 
-    const graphYearDisplay = document.getElementById('gh-graph-year-display');
-    const prevBtn = document.getElementById('gh-year-prev');
-    const nextBtn = document.getElementById('gh-year-next');
-    const liveBadge = document.getElementById('gh-live-badge');
-    const chartImg = document.getElementById('gh-chart-img');
-
-    function updateGraphYear(year) {
+    function updateGraph(year) {
       graphYear = year;
       if (graphYearDisplay) graphYearDisplay.textContent = year;
-      
-      // Update the chart image — ghchart doesn't support year param,
-      // so we use github-contributions-api to build our own SVG for past years
-      // For current year, use the live ghchart; for past years, use the API
-      if (chartImg) {
-        if (year === currentYear) {
-          chartImg.src = 'https://ghchart.rshah.org/00f2fe/' + GITHUB_USERNAME;
-        } else {
-          // Use github-readme-stats or a year-specific chart
-          chartImg.src = 'https://ghchart.rshah.org/00f2fe/' + GITHUB_USERNAME + '?year=' + year;
-        }
-        chartImg.alt = 'GitHub Contribution Graph for ' + year;
-      }
-      
-      // Show/hide live badge
-      if (liveBadge) {
-        liveBadge.style.display = (year === currentYear) ? 'inline-flex' : 'none';
-      }
-      
-      // Disable/enable navigation buttons
+      if (liveBadge) liveBadge.style.display = (year === currentYear) ? 'inline-flex' : 'none';
       if (prevBtn) prevBtn.disabled = (year <= EARLIEST_YEAR);
       if (nextBtn) nextBtn.disabled = (year >= currentYear);
+
+      if (!graphWrapper) return;
+
+      // Show loading shimmer
+      graphWrapper.innerHTML = '<div style="display:flex;justify-content:center;padding:1.5rem;"><span class="stat-loading-pulse" style="width:100%;height:90px;display:inline-block;border-radius:8px;"></span></div>';
+
+      fetchYearData(year)
+        .then(function(data) {
+          graphWrapper.innerHTML = renderHeatmapSVG(data.contributions || [], year);
+        })
+        .catch(function(err) {
+          console.warn('Failed to load graph for ' + year, err);
+          graphWrapper.innerHTML = '<p style="color:#6b7280;text-align:center;padding:2rem;">Unable to load data for ' + year + '</p>';
+        });
     }
 
+    // Year navigation buttons
     if (prevBtn) {
       prevBtn.addEventListener('click', function() {
-        if (graphYear > EARLIEST_YEAR) {
-          updateGraphYear(graphYear - 1);
-        }
+        if (graphYear > EARLIEST_YEAR) updateGraph(graphYear - 1);
       });
     }
-
     if (nextBtn) {
       nextBtn.addEventListener('click', function() {
-        if (graphYear < currentYear) {
-          updateGraphYear(graphYear + 1);
-        }
+        if (graphYear < currentYear) updateGraph(graphYear + 1);
       });
     }
 
-    // Set initial state
-    updateGraphYear(currentYear);
+    // --- Calculate longest streak across ALL contribution data ---
+    function calcLongestStreak(allContributions) {
+      if (!allContributions || allContributions.length === 0) return 0;
 
-    // Initialize
+      // Sort by date ascending (string comparison works for YYYY-MM-DD)
+      var sorted = allContributions.slice().sort(function(a, b) {
+        return a.date.localeCompare(b.date);
+      });
+
+      // Deduplicate by date (in case year boundaries overlap)
+      var unique = [];
+      var seen = {};
+      for (var i = 0; i < sorted.length; i++) {
+        if (!seen[sorted[i].date]) {
+          seen[sorted[i].date] = true;
+          unique.push(sorted[i]);
+        }
+      }
+
+      var longest = 0;
+      var streak = 0;
+      var prevDateStr = null;
+
+      for (var j = 0; j < unique.length; j++) {
+        var day = unique[j];
+        if (day.count > 0) {
+          if (prevDateStr) {
+            // Parse both dates manually to avoid timezone issues
+            var pp = prevDateStr.split('-');
+            var cp = day.date.split('-');
+            var prevD = new Date(parseInt(pp[0]), parseInt(pp[1]) - 1, parseInt(pp[2]));
+            var currD = new Date(parseInt(cp[0]), parseInt(cp[1]) - 1, parseInt(cp[2]));
+            var diff = Math.round((currD - prevD) / MS_PER_DAY);
+
+            if (diff === 1) {
+              streak++;
+            } else {
+              streak = 1;
+            }
+          } else {
+            streak = 1;
+          }
+          prevDateStr = day.date;
+          if (streak > longest) longest = streak;
+        } else {
+          streak = 0;
+          prevDateStr = null;
+        }
+      }
+
+      return longest;
+    }
+
+    // --- Fetch GitHub REST API data (repos, stars) ---
+    function fetchGitHubStats() {
+      fetch('https://api.github.com/users/' + GITHUB_USERNAME)
+        .then(function(res) {
+          if (!res.ok) throw new Error('GitHub API error');
+          return res.json();
+        })
+        .then(function(userData) {
+          setStat('gh-repos-count', userData.public_repos || 0);
+
+          // Paginate repos to count all stars
+          var totalStars = 0;
+          function fetchPage(page) {
+            return fetch('https://api.github.com/users/' + GITHUB_USERNAME + '/repos?per_page=100&page=' + page)
+              .then(function(r) { return r.json(); })
+              .then(function(repos) {
+                if (!repos || repos.length === 0) {
+                  setStat('gh-stars-count', totalStars);
+                  return;
+                }
+                repos.forEach(function(repo) { totalStars += repo.stargazers_count || 0; });
+                if (repos.length === 100) {
+                  return fetchPage(page + 1);
+                } else {
+                  setStat('gh-stars-count', totalStars);
+                }
+              });
+          }
+          return fetchPage(1);
+        })
+        .catch(function(err) {
+          console.warn('GitHub API fetch failed:', err);
+          setStat('gh-repos-count', '—');
+          setStat('gh-stars-count', '—');
+        });
+    }
+
+    // --- Initialize everything ---
+    function init() {
+      // Build list of all years to fetch
+      var years = [];
+      for (var y = EARLIEST_YEAR; y <= currentYear; y++) years.push(y);
+
+      // Fetch all years in parallel
+      Promise.allSettled(years.map(function(y) { return fetchYearData(y); }))
+        .then(function() {
+          // 1. Display current year contribution count
+          var currentData = contribCache[currentYear];
+          if (currentData) {
+            var total = currentData.total && currentData.total[currentYear]
+              ? currentData.total[currentYear]
+              : Object.values(currentData.total || {}).reduce(function(a, b) { return a + b; }, 0);
+            setStat('gh-contributions-count', total || 0);
+          } else {
+            setStat('gh-contributions-count', '—');
+          }
+
+          // 2. Render the current year heatmap
+          updateGraph(currentYear);
+
+          // 3. Calculate longest streak across ALL years
+          var allContribs = [];
+          years.forEach(function(y) {
+            if (contribCache[y] && contribCache[y].contributions) {
+              allContribs = allContribs.concat(contribCache[y].contributions);
+            }
+          });
+          var longest = calcLongestStreak(allContribs);
+          setStat('gh-streak-count', longest);
+        })
+        .catch(function(err) {
+          console.warn('Contributions init failed:', err);
+          setStat('gh-contributions-count', '—');
+          setStat('gh-streak-count', '—');
+        });
+    }
+
     fetchGitHubStats();
-    fetchContributions();
+    init();
   })();
 </script>
 
