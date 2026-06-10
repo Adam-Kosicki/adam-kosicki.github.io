@@ -1270,6 +1270,51 @@ a {
   height: auto;
   border-radius: 4px;
   filter: brightness(0.95) contrast(1.1);
+  transition: opacity 0.3s ease;
+}
+
+/* Year Navigation Controls */
+.github-graph-year-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.year-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.year-nav-btn:hover:not(:disabled) {
+  background: rgba(0, 242, 254, 0.1);
+  border-color: rgba(0, 242, 254, 0.3);
+  color: var(--accent-cyan);
+  transform: translateY(-1px);
+}
+
+.year-nav-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.year-nav-display {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  min-width: 50px;
+  text-align: center;
+  user-select: none;
 }
 
 /* --- Responsive Adjustments --- */

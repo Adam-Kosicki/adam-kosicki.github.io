@@ -81,7 +81,7 @@ title: Home
         </div>
       </div>
 
-      <!-- Stat: Current Streak -->
+      <!-- Stat: Longest Streak -->
       <div class="github-stat-card" id="gh-streak-card">
         <div class="github-stat-icon-wrapper">
           <i class="fa-solid fa-fire-flame-curved"></i>
@@ -90,7 +90,7 @@ title: Home
           <span class="github-stat-value" id="gh-streak-count">
             <span class="stat-loading-pulse"></span>
           </span>
-          <span class="github-stat-label">Day Streak</span>
+          <span class="github-stat-label">Longest Streak (Days)</span>
         </div>
       </div>
 
@@ -113,15 +113,25 @@ title: Home
       <div class="github-graph-card">
         <div class="github-graph-header">
           <span class="github-graph-label"><i class="fa-solid fa-chart-area"></i> Contribution Activity</span>
-          <span class="github-graph-live-badge">
-            <span class="live-dot"></span> Live
-          </span>
+          <div class="github-graph-year-nav">
+            <button class="year-nav-btn" id="gh-year-prev" aria-label="Previous year">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <span class="year-nav-display" id="gh-graph-year-display">2026</span>
+            <button class="year-nav-btn" id="gh-year-next" aria-label="Next year">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            <span class="github-graph-live-badge" id="gh-live-badge">
+              <span class="live-dot"></span> Live
+            </span>
+          </div>
         </div>
         <div class="github-graph-wrapper" id="gh-contribution-graph">
           <img
             src="https://ghchart.rshah.org/00f2fe/{{ site.author.github }}"
             alt="GitHub Contribution Graph for {{ site.author.name }}"
             class="github-contribution-chart"
+            id="gh-chart-img"
             loading="lazy"
           />
         </div>
@@ -816,39 +826,46 @@ title: Home
         
         setStat('gh-contributions-count', totalContributions || 0);
 
-        // Calculate current streak from contribution data
+        // Calculate LONGEST streak from contribution data
         if (data.contributions && data.contributions.length > 0) {
-          let streak = 0;
-          // Sort contributions by date descending
+          // Sort contributions by date ascending for sequential scan
           const sorted = data.contributions
             .slice()
-            .sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
+            .sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
           
-          // Check from today backwards
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-          
+          let longestStreak = 0;
+          let currentStreak = 0;
+          let prevDate = null;
+
           for (var i = 0; i < sorted.length; i++) {
-            var contribDate = new Date(sorted[i].date);
-            contribDate.setHours(0, 0, 0, 0);
-            
-            // Skip future dates
-            if (contribDate > today) continue;
-            
-            // For today, allow 0 contributions (day isn't over yet)
-            if (contribDate.getTime() === today.getTime()) {
-              if (sorted[i].count > 0) streak++;
-              continue;
-            }
-            
             if (sorted[i].count > 0) {
-              streak++;
+              if (prevDate) {
+                var prev = new Date(prevDate);
+                var curr = new Date(sorted[i].date);
+                prev.setHours(0, 0, 0, 0);
+                curr.setHours(0, 0, 0, 0);
+                var diffDays = Math.round((curr - prev) / (1000 * 60 * 60 * 24));
+                
+                if (diffDays === 1) {
+                  currentStreak++;
+                } else {
+                  // Gap in contributions — reset streak
+                  currentStreak = 1;
+                }
+              } else {
+                currentStreak = 1;
+              }
+              prevDate = sorted[i].date;
+              if (currentStreak > longestStreak) {
+                longestStreak = currentStreak;
+              }
             } else {
-              break;
+              currentStreak = 0;
+              prevDate = null;
             }
           }
           
-          setStat('gh-streak-count', streak);
+          setStat('gh-streak-count', longestStreak);
         } else {
           setStat('gh-streak-count', 0);
         }
@@ -859,6 +876,62 @@ title: Home
         setStat('gh-streak-count', '—');
       }
     }
+
+    // --- Contribution Graph Year Navigation ---
+    const EARLIEST_YEAR = 2023; // Earliest year to allow browsing
+    let graphYear = currentYear;
+
+    const graphYearDisplay = document.getElementById('gh-graph-year-display');
+    const prevBtn = document.getElementById('gh-year-prev');
+    const nextBtn = document.getElementById('gh-year-next');
+    const liveBadge = document.getElementById('gh-live-badge');
+    const chartImg = document.getElementById('gh-chart-img');
+
+    function updateGraphYear(year) {
+      graphYear = year;
+      if (graphYearDisplay) graphYearDisplay.textContent = year;
+      
+      // Update the chart image — ghchart doesn't support year param,
+      // so we use github-contributions-api to build our own SVG for past years
+      // For current year, use the live ghchart; for past years, use the API
+      if (chartImg) {
+        if (year === currentYear) {
+          chartImg.src = 'https://ghchart.rshah.org/00f2fe/' + GITHUB_USERNAME;
+        } else {
+          // Use github-readme-stats or a year-specific chart
+          chartImg.src = 'https://ghchart.rshah.org/00f2fe/' + GITHUB_USERNAME + '?year=' + year;
+        }
+        chartImg.alt = 'GitHub Contribution Graph for ' + year;
+      }
+      
+      // Show/hide live badge
+      if (liveBadge) {
+        liveBadge.style.display = (year === currentYear) ? 'inline-flex' : 'none';
+      }
+      
+      // Disable/enable navigation buttons
+      if (prevBtn) prevBtn.disabled = (year <= EARLIEST_YEAR);
+      if (nextBtn) nextBtn.disabled = (year >= currentYear);
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function() {
+        if (graphYear > EARLIEST_YEAR) {
+          updateGraphYear(graphYear - 1);
+        }
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function() {
+        if (graphYear < currentYear) {
+          updateGraphYear(graphYear + 1);
+        }
+      });
+    }
+
+    // Set initial state
+    updateGraphYear(currentYear);
 
     // Initialize
     fetchGitHubStats();
