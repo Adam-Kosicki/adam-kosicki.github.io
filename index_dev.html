@@ -107,19 +107,6 @@ title: Home
           <span class="github-stat-label">Stars Earned</span>
         </div>
       </div>
-
-      <!-- Stat: Best Week -->
-      <div class="github-stat-card" id="gh-bestweek-card">
-        <div class="github-stat-icon-wrapper">
-          <i class="fa-solid fa-calendar-week"></i>
-        </div>
-        <div class="github-stat-content">
-          <span class="github-stat-value" id="gh-bestweek-count">
-            <span class="stat-loading-pulse"></span>
-          </span>
-          <span class="github-stat-label">Best Week</span>
-        </div>
-      </div>
     </div>
 
     <!-- Contribution Graph -->
@@ -155,13 +142,55 @@ title: Home
   </div>
 </section>
 
+<!-- What Drives Me Section -->
+<section class="interests-section" id="interests">
+  <div class="container">
+    <h2 class="section-title" style="text-align: center;">What Drives Me</h2>
+    <p class="section-subtitle" style="text-align: center;">The problems I chase and the mindset behind my work</p>
+    
+    <div class="interests-grid">
+      <div class="interest-card">
+        <div class="interest-icon">
+          <i class="fa-solid fa-database"></i>
+        </div>
+        <h3>Data Engineering & Big Data</h3>
+        <p>There's something deeply satisfying about designing a pipeline that chews through millions of records without breaking a sweat. I love the challenge of working with massive, messy datasets and building the architecture that turns raw data into real insights.</p>
+      </div>
+      
+      <div class="interest-card">
+        <div class="interest-icon">
+          <i class="fa-solid fa-brain"></i>
+        </div>
+        <h3>AI That Actually Helps People</h3>
+        <p>AI isn't just a buzzword to me — it's a tool I'm constantly experimenting with to solve real problems. I'm most excited about integrating machine learning into everyday workflows so it genuinely makes someone's day easier, not just looks impressive in a demo.</p>
+      </div>
+      
+      <div class="interest-card">
+        <div class="interest-icon">
+          <i class="fa-solid fa-compass"></i>
+        </div>
+        <h3>Owning It Start to Finish</h3>
+        <p>I don't want to just write code and throw it over the wall. I want to own the entire lifecycle — from the first architecture sketch to the production deploy and everything in between. That responsibility is what keeps me sharp and motivated.</p>
+      </div>
+      
+      <div class="interest-card">
+        <div class="interest-icon">
+          <i class="fa-solid fa-heart-pulse"></i>
+        </div>
+        <h3>Building Things That Matter</h3>
+        <p>The projects that fire me up are the ones where someone's life gets a little bit better because of what we built. Whether it's making roads safer through better data or streamlining a tedious workflow, real-world impact is what makes it all worth it.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- Superpowers / Core Focus Section (COMMENTED OUT)
+<!-- Superpowers / Core Focus Section -->
 <section class="container" style="padding: 4rem 2rem 1rem 2rem;">
   <h2 class="section-title">Core Engineering Strengths</h2>
   <p class="section-subtitle">My core technical capabilities and areas of specialization</p>
   
   <div class="superpowers-grid">
+    <!-- Card 1 -->
     <div class="superpower-card">
       <div class="superpower-icon">
         <i class="fa-solid fa-microchip"></i>
@@ -172,6 +201,7 @@ title: Home
       </p>
     </div>
     
+    <!-- Card 2 -->
     <div class="superpower-card">
       <div class="superpower-icon">
         <i class="fa-solid fa-database"></i>
@@ -182,6 +212,7 @@ title: Home
       </p>
     </div>
     
+    <!-- Card 3 -->
     <div class="superpower-card">
       <div class="superpower-icon">
         <i class="fa-solid fa-list-check"></i>
@@ -193,7 +224,6 @@ title: Home
     </div>
   </div>
 </section>
-End of Core Engineering Strengths Section -->
 
 <!-- Technical Toolkit / Skills Section -->
 <section class="container" id="skills" style="padding: 2rem 2rem 4rem 2rem;">
@@ -281,30 +311,34 @@ End of Core Engineering Strengths Section -->
   </div>
 </section>
 
-<!-- Quantitative Impact Banner (COMMENTED OUT)
+<!-- Quantitative Impact Banner -->
 <section class="achievements-section" id="achievements">
   <div class="container">
     <h2 class="section-title" style="text-align: center; margin-bottom: 3rem;">Achievements & Impact</h2>
     
     <div class="achievements-grid">
+      <!-- Stat 1 -->
       <div class="achievement-stat">
         <span class="stat-value">Millions</span>
         <span class="stat-label">Records Processed</span>
         <span class="stat-desc">Weather & crash database correlation in &lt;48h on TACC Lonestar6</span>
       </div>
       
+      <!-- Stat 2 -->
       <div class="achievement-stat">
         <span class="stat-value">~30 FPS</span>
         <span class="stat-label">Edge Inference Speed</span>
         <span class="stat-desc">Real-time intersection analytics on NVIDIA Jetson modules</span>
       </div>
       
+      <!-- Stat 3 -->
       <div class="achievement-stat">
         <span class="stat-value">90%</span>
         <span class="stat-label">Configuration Savings</span>
         <span class="stat-desc">Reduction in scene configuration times using zero-shot segmentations (SAM)</span>
       </div>
       
+      <!-- Stat 4 -->
       <div class="achievement-stat">
         <span class="stat-value"><span class="experience-counter">2.2</span> Yrs</span>
         <span class="stat-label">UT Austin Lead Research</span>
@@ -313,7 +347,6 @@ End of Core Engineering Strengths Section -->
     </div>
   </div>
 </section>
-End of Achievements & Impact Section -->
 
 <!-- Featured Project Showcase (Main Star of the Show) -->
 <section class="container showcase-section" id="featured-project">
@@ -726,6 +759,30 @@ End of Achievements & Impact Section -->
   </div>
 </section>
 
+<!-- Off the Clock / About Me Section -->
+<section class="about-me-section" id="off-the-clock">
+  <div class="container">
+    <h2 class="section-title" style="text-align: center;">Off the Clock</h2>
+    <p class="section-subtitle" style="text-align: center;">Because there's more to life than staring at a terminal</p>
+    
+    <div class="about-me-card">
+      <div class="about-me-image-container">
+        <div class="about-me-image-placeholder" id="about-me-photo">
+          <i class="fa-solid fa-volleyball"></i>
+          <span>Photo coming soon</span>
+        </div>
+      </div>
+      <div class="about-me-content">
+        <p>
+          When I'm not debugging data pipelines or arguing with CUDA kernels, you'll probably find me on a volleyball court somewhere in Austin — convincing myself that my sets are getting better. The jury's still out on that one.
+        </p>
+        <p>
+          I got into engineering because I genuinely love the puzzle of it. That moment when you've been stuck for hours, change one thing, and everything clicks? Never gets old. I bring that same energy to everything I do — whether it's optimizing a query or figuring out the perfect serve toss. I'm a firm believer that the best ideas come when you step away from the screen for a bit, so I try not to take myself too seriously outside of work.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <script>
   (function() {
@@ -954,46 +1011,6 @@ End of Achievements & Impact Section -->
       return longest;
     }
 
-    // --- Calculate best (most contributions) single week across ALL data ---
-    function calcBestWeek(allContributions) {
-      if (!allContributions || allContributions.length === 0) return 0;
-
-      // Sort by date ascending
-      var sorted = allContributions.slice().sort(function(a, b) {
-        return a.date.localeCompare(b.date);
-      });
-
-      // Deduplicate by date
-      var unique = [];
-      var seen = {};
-      for (var i = 0; i < sorted.length; i++) {
-        if (!seen[sorted[i].date]) {
-          seen[sorted[i].date] = true;
-          unique.push(sorted[i]);
-        }
-      }
-
-      // Use a sliding window of 7 consecutive calendar days
-      var best = 0;
-      for (var j = 0; j < unique.length; j++) {
-        var windowSum = 0;
-        var startParts = unique[j].date.split('-');
-        var startD = new Date(parseInt(startParts[0]), parseInt(startParts[1]) - 1, parseInt(startParts[2]));
-
-        for (var k = j; k < unique.length; k++) {
-          var kParts = unique[k].date.split('-');
-          var kD = new Date(parseInt(kParts[0]), parseInt(kParts[1]) - 1, parseInt(kParts[2]));
-          var dayDiff = Math.round((kD - startD) / MS_PER_DAY);
-
-          if (dayDiff >= 7) break; // past 7-day window
-          windowSum += unique[k].count;
-        }
-        if (windowSum > best) best = windowSum;
-      }
-
-      return best;
-    }
-
     // --- Fetch GitHub REST API data (repos, stars) ---
     function fetchGitHubStats() {
       fetch('https://api.github.com/users/' + GITHUB_USERNAME)
@@ -1063,10 +1080,6 @@ End of Achievements & Impact Section -->
           });
           var longest = calcLongestStreak(allContribs);
           setStat('gh-streak-count', longest);
-
-          // 4. Calculate best single week across ALL years
-          var bestWeek = calcBestWeek(allContribs);
-          setStat('gh-bestweek-count', bestWeek);
         })
         .catch(function(err) {
           console.warn('Contributions init failed:', err);
