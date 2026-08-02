@@ -81,8 +81,11 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="container">
+      <div class="container footer-bottom-flex">
         <p>&copy; {{ 'now' | date: "%Y" }} Adam Kosicki. All rights reserved.</p>
+        <p class="last-updated">
+          <i class="fa-solid fa-clock-rotate-left"></i> Last updated: <span id="last-updated-date">{{ site.time | date: "%B %d, %Y" }}</span>
+        </p>
       </div>
     </div>
   </footer>
@@ -93,27 +96,55 @@
       const toggleBtn = document.getElementById('mobile-toggle');
       const mobileMenu = document.getElementById('mobile-menu');
       
-      toggleBtn.addEventListener('click', function() {
-        mobileMenu.classList.toggle('active');
-        const icon = toggleBtn.querySelector('i');
-        if (mobileMenu.classList.contains('active')) {
-          icon.classList.remove('fa-bars');
-          icon.classList.add('fa-xmark');
-        } else {
-          icon.classList.remove('fa-xmark');
-          icon.classList.add('fa-bars');
-        }
-      });
-
-      // Close menu when clicking links
-      const links = mobileMenu.querySelectorAll('a');
-      links.forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.remove('active');
-          toggleBtn.querySelector('i').classList.remove('fa-xmark');
-          toggleBtn.querySelector('i').classList.add('fa-bars');
+      if (toggleBtn && mobileMenu) {
+        toggleBtn.addEventListener('click', function() {
+          mobileMenu.classList.toggle('active');
+          const icon = toggleBtn.querySelector('i');
+          if (mobileMenu.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-xmark');
+          } else {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+          }
         });
-      });
+
+        // Close menu when clicking links
+        const links = mobileMenu.querySelectorAll('a');
+        links.forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            toggleBtn.querySelector('i').classList.remove('fa-xmark');
+            toggleBtn.querySelector('i').classList.add('fa-bars');
+          });
+        });
+      }
+
+      // Fetch latest commit date dynamically from GitHub API
+      const repoUser = '{{ site.author.github }}';
+      const repoName = 'adam-kosicki.github.io';
+      fetch(`https://api.github.com/repos/${repoUser}/${repoName}/commits/main`)
+        .then(response => {
+          if (!response.ok) throw new Error('API response not ok');
+          return response.json();
+        })
+        .then(data => {
+          if (data && data.commit && data.commit.committer && data.commit.committer.date) {
+            const commitDate = new Date(data.commit.committer.date);
+            const formattedDate = commitDate.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            });
+            const dateEl = document.getElementById('last-updated-date');
+            if (dateEl) {
+              dateEl.textContent = formattedDate;
+            }
+          }
+        })
+        .catch(() => {
+          // Fallback to Jekyll site.time (rendered server-side)
+        });
     });
   </script>
 </body>

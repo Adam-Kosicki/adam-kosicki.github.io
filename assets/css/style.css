@@ -2349,3 +2349,37 @@ a {
   }
 }
 
+/* --- Footer & Last Updated --- */
+.footer-bottom-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  padding: 1.5rem 0;
+}
+
+.last-updated {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.last-updated i {
+  color: var(--accent-cyan);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 600px) {
+  .footer-bottom-flex {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+
