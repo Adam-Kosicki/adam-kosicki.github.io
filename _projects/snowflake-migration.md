@@ -50,6 +50,13 @@ This project successfully transitioned from a research-driven pilot to a statewi
 
 <div class="timeline">
   <div class="timeline-item">
+    <div class="timeline-date">Feb 2025 – Mar 2025</div>
+    <div class="timeline-content">
+      <strong>Initial Python & PostgreSQL Engine Prototype</strong><br>
+      Engineered the initial high-throughput Python & PostgreSQL processing engine on TACC Lonestar6 HPC, uncovering the 4.5% NetCDF quantization bias and proving feasibility for TxDOT. <a href="{{ '/projects/mrms-python-prototype/' | relative_url }}">Read Prototype Case Study & System Design <i class="fa-solid fa-arrow-right-long"></i></a>
+    </div>
+  </div>
+  <div class="timeline-item">
     <div class="timeline-date">April 18, 2025</div>
     <div class="timeline-content">
       <strong>Ingestion Strategy Document Published</strong><br>
