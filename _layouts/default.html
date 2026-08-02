@@ -22,9 +22,14 @@
   <!-- Premium Header -->
   <header class="site-header">
     <div class="container header-container">
-      <a href="{{ '/' | relative_url }}" class="site-logo">
-        <span class="logo-accent">&lt;</span>Adam Kosicki<span class="logo-accent"> /&gt;</span>
-      </a>
+      <div class="header-brand-group">
+        <a href="{{ '/' | relative_url }}" class="site-logo">
+          <span class="logo-accent">&lt;</span>Adam Kosicki<span class="logo-accent"> /&gt;</span>
+        </a>
+        <span class="header-last-updated">
+          <i class="fa-solid fa-clock-rotate-left"></i> Last updated: <span class="last-updated-date-val">{{ site.time | date: "%B %d, %Y" }}</span>
+        </span>
+      </div>
       
       <!-- Desktop Navigation -->
       <nav class="desktop-nav">
@@ -46,6 +51,9 @@
 
   <!-- Mobile Dropdown Navigation -->
   <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-last-updated">
+      <i class="fa-solid fa-clock-rotate-left"></i> Last updated: <span class="last-updated-date-val">{{ site.time | date: "%B %d, %Y" }}</span>
+    </div>
     <a href="{{ '/' | relative_url }}#about" class="mobile-link">About</a>
     <a href="{{ '/' | relative_url }}#github-activity" class="mobile-link">GitHub</a>
     <a href="{{ '/' | relative_url }}#education" class="mobile-link">Education</a>
@@ -84,7 +92,7 @@
       <div class="container footer-bottom-flex">
         <p>&copy; {{ 'now' | date: "%Y" }} Adam Kosicki. All rights reserved.</p>
         <p class="last-updated">
-          <i class="fa-solid fa-clock-rotate-left"></i> Last updated: <span id="last-updated-date">{{ site.time | date: "%B %d, %Y" }}</span>
+          <i class="fa-solid fa-clock-rotate-left"></i> Last updated: <span class="last-updated-date-val">{{ site.time | date: "%B %d, %Y" }}</span>
         </p>
       </div>
     </div>
@@ -136,10 +144,9 @@
               month: 'long',
               day: 'numeric'
             });
-            const dateEl = document.getElementById('last-updated-date');
-            if (dateEl) {
-              dateEl.textContent = formattedDate;
-            }
+            document.querySelectorAll('.last-updated-date-val').forEach(el => {
+              el.textContent = formattedDate;
+            });
           }
         })
         .catch(() => {

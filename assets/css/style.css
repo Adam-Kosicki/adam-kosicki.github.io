@@ -2382,4 +2382,65 @@ a {
   }
 }
 
+/* --- Header Last Updated Badge --- */
+.header-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.header-last-updated {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: rgba(0, 242, 254, 0.06);
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.header-last-updated i {
+  color: var(--accent-cyan);
+  font-size: 0.75rem;
+}
+
+.header-last-updated .last-updated-date-val {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+.mobile-last-updated {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: rgba(0, 242, 254, 0.06);
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  margin-bottom: 0.5rem;
+}
+
+.mobile-last-updated i {
+  color: var(--accent-cyan);
+}
+
+.mobile-last-updated .last-updated-date-val {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .header-last-updated {
+    display: none;
+  }
+}
+
+
 
