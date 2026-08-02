@@ -2176,3 +2176,176 @@ a {
     justify-content: center;
   }
 }
+
+/* --- Coursework Section --- */
+.coursework-section {
+  position: relative;
+}
+
+.coursework-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.coursework-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.coursework-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--card-border-glow);
+  box-shadow: 0 12px 30px rgba(0, 242, 254, 0.12);
+  background: var(--card-hover-bg);
+}
+
+.coursework-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.coursework-icon-box {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  background: rgba(0, 242, 254, 0.1);
+  border: 1px solid rgba(0, 242, 254, 0.25);
+  color: var(--accent-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  flex-shrink: 0;
+}
+
+.coursework-icon-c {
+  background: rgba(79, 172, 254, 0.1);
+  border: 1px solid rgba(79, 172, 254, 0.25);
+  color: #4facfe;
+}
+
+.coursework-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.coursework-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent-cyan);
+  background: rgba(0, 242, 254, 0.08);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.coursework-badge-c {
+  color: #4facfe;
+  background: rgba(79, 172, 254, 0.08);
+}
+
+.coursework-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.coursework-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.coursework-desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.coursework-highlights {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.75rem;
+  padding: 0;
+}
+
+.coursework-highlights li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.coursework-highlights li i {
+  color: var(--accent-cyan);
+  font-size: 0.95rem;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.coursework-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.coursework-action {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.coursework-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.coursework-btn .external-icon {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  transition: transform 0.2s ease;
+}
+
+.coursework-btn:hover .external-icon {
+  transform: translate(2px, -2px);
+}
+
+@media (max-width: 900px) {
+  .coursework-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
